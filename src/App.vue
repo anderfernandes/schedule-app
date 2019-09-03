@@ -1,19 +1,21 @@
 <template>
   <div class="ui fluid container">
-	  <div class="ui blue icon message">
-      <i class="info circle icon"></i>
-      <div class="content">
-        <div class="header">
-          Are you planning on visiting us after {{ format(new Date(end), 'EEEE, MMMM dd') }}?
+    <div class="ui basic segment">
+      <div class="ui blue icon message">
+        <i class="info circle icon"></i>
+        <div class="content">
+          <div class="header">
+            Are you planning on visiting us after {{ format(new Date(end), 'EEEE, MMMM d') }}?
+          </div>
+          <p><a href="/public-calendar">Click here</a> to see our Public Calendar, which contains all our future confirmed events as they are added.</p>
         </div>
-        <p><a href="/public-calendar">Click here</a> to see our Public Calendar, which contains all our future confirmed events as they are added.</p>
-      </div>
-    </div>	
+      </div>	
+    </div>
     <div class="ui basic segment" v-for="(day, i) in days" :key="i">
       <div class="ui dividing header">
         <i class="calendar alternate outline icon"></i>
         <div class="content">
-          {{ format(new Date(day.date), 'EEEE, MMMM dd, yyyy') }}
+          {{ format(new Date(day.date), 'EEEE, MMMM d') }}
         </div>
       </div>
       <div class="ui items" v-if="!loading">
@@ -38,7 +40,7 @@
               </div>
               <div class="ui basic blue label">
                 <i class="calendar alternate outline icon"></i>
-                {{ format(new Date(event.start), "EEEE, MMMM dd, yyyy 'at' hh:mm a") }}
+                {{ format(new Date(event.start), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
                 ({{ formatDistanceToNow(new Date(event.start), { addSuffix: true }) }})
               </div>
             </div>
@@ -51,6 +53,12 @@
             <div class="description" v-html="marked(event.show.description, { sanizite: true })"></div>
           </div>
         </div>
+      </div>
+      <div class="ui basic right aligned segment">
+        <a href="https://astral.anderfernandes.com" class="ui black tiny image label">
+          <img src="https://astral.anderfernandes.com/assets/astral-logo-light.png" alt="">
+          Powered by Astral
+        </a>
       </div>
     </div>
     
