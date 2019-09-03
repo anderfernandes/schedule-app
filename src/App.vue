@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="ui basic right aligned segment">
-        <a href="https://astral.anderfernandes.com" class="ui black tiny image label">
+        <a href="https://astral.anderfernandes.com" target="_blank" class="ui black tiny image label">
           <img src="https://astral.anderfernandes.com/assets/astral-logo-light.png" alt="">
           Powered by Astral
         </a>
