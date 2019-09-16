@@ -11,7 +11,7 @@
         </div>
       </div>	
     </div>
-    <div class="ui basic segment" v-for="(day, i) in days" :key="i">
+    <div class="ui basic segment" v-for="(day, i) in days" :key="i" v-if="day.events.length > 0">
       <div class="ui dividing header">
         <i class="calendar alternate outline icon"></i>
         <div class="content">
@@ -54,14 +54,15 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="ui basic segment">
       <div class="ui basic right aligned segment">
         <a href="https://astral.anderfernandes.com" target="_blank" class="ui black tiny image label">
           <img src="https://astral.anderfernandes.com/assets/astral-logo-light.png" alt="">
           Powered by Astral
         </a>
       </div>
-    </div>
-    
+    </div>    
     <div class="ui text loader">Loading...</div>
   </div>
 </template>
