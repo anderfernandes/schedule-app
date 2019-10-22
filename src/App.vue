@@ -21,16 +21,16 @@
       <div class="ui items" v-if="!loading">
         <div class="item" v-for="event in day.events" :event="event" :key="event.id">
           <div class="image">
-          <img :src="event.show.cover">
+          <img :src="event.show.id == 1 ? cover : event.show.cover">
           </div>
           <div class="content">
-            <div class="header">{{ event.show.name }}</div>
+            <div class="header">{{ event.show.id == 1 ? event.memo : event.show.name }}</div>
             <div class="meta">
-              <div class="ui blue label">
+              <div class="ui blue label" v-if="event.show.id != 1">
                 <i class="film icon"></i>
                 {{ event.show.type }}
               </div>
-              <div class="ui basic blue label">
+              <div class="ui basic blue label" v-if="event.show.id != 1">
                 <i class="clock icon"></i>
                 {{ event.show.duration }} minutes
               </div>
@@ -50,7 +50,10 @@
                 $ {{ parseFloat(ticket.price).toFixed(2) }} / {{ ticket.name }}
               </div>
             </div>
-            <div class="description" v-html="marked(event.show.description, { sanizite: true })"></div>
+            <div class="description" v-html="marked(event.show.id == 1 ? event.memo : event.show.description, { sanizite: true })"></div>
+            <div class="description" v-if="event.show.trailer_url">
+              <sui-embed :placeholder="event.show.cover" source="youtube" :id="event.show.trailer_url.split('=')[1]" />
+            </div>
           </div>
         </div>
       </div>
@@ -77,7 +80,8 @@
     data: () => ({
       days    : [],
       loading : true,
-      end     : addDays(new Date(), 7)
+      end     : addDays(new Date(), 7),
+      cover   : null,
     }),
     methods: {
       async fetchEvents() {
@@ -92,13 +96,30 @@
           console.log(error.message)
         }
       },
+      async fetchCover() {
+        try {
+          const response = await axios.get('https://astral.ctcd.org/api/settings')
+          Object.assign(this, { cover: `https://astral.ctcd.org/storage/${response.data.cover}` })
+        } catch (error) {
+          console.log(error.message)
+        }
+      },
       format,
       formatDistanceToNow,
       formatDistanceStrict,
       marked,
     },
-    async created() {
+    async mounted() {
+      await this.fetchCover()
       await this.fetchEvents()
     },
   }
 </script>
+<style>
+  .ui.embed > .placeholder {
+    width: inherit !important;
+    transform: translate(-50%, -50%) !important;
+    left: 50%;
+    top: 50%;
+  }
+</style>
