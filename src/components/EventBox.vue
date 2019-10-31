@@ -1,7 +1,12 @@
 <template>
   <div class="item">
     <div class="image">
-      <img :src="event.show.id == 1 ? cover : event.show.cover">
+      <img :src="event.show.id == 1 ? cover : event.show.cover" />
+      <br />
+      <div class="ui fluid black button" @click="toggleTrailer" v-if="event.show.trailer_url">
+        <i class="film icon"></i>
+        {{ show_trailer ? 'Hide' : 'View' }} Trailer
+      </div>
     </div>
     <div class="content">
       <div class="header">{{ event.show.id == 1 ? event.memo : event.show.name }}</div>
@@ -30,25 +35,37 @@
           $ {{ parseFloat(ticket.price).toFixed(2) }} / {{ ticket.name }}
         </div>
       </div>
-      <div class="description" v-html="marked(event.show.id == 1 ? event.memo : event.show.description, { sanizite: true })"></div>
-      <div class="description" v-if="event.show.trailer_url">
-        <sui-embed :placeholder="event.show.cover" source="youtube" :id="event.show.trailer_url.split('=')[1]" />
+      <div
+        class="description"
+        v-html="marked(event.show.id == 1 ? event.memo : event.show.description, { sanizite: true })"
+      ></div>
+      <div class="description" v-if="event.show.trailer_url && show_trailer">
+        <sui-embed
+          :placeholder="event.show.cover"
+          source="youtube"
+          :id="event.show.trailer_url.split('=')[1]"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  
-  import { addDays, format, formatDistanceToNow } from 'date-fns'
-  import marked from 'marked'
-  
-  export default {
-    props: ['event'],
-    methods: {
-      format,
-      formatDistanceToNow,
-      marked,
-    }  
+import { addDays, format, formatDistanceToNow } from "date-fns";
+import marked from "marked";
+
+export default {
+  props: ["event"],
+  data: () => ({
+    show_trailer: false
+  }),
+  methods: {
+    toggleTrailer() {
+      this.show_trailer = !this.show_trailer;
+    },
+    format,
+    formatDistanceToNow,
+    marked
   }
+};
 </script>

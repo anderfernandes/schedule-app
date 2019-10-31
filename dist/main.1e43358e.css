@@ -1,1 +1,6 @@
-.ui.embed>.placeholder{width:inherit!important;transform:translate(-50%,-50%)!important;left:50%;top:50%}
+.ui.embed > .placeholder {
+  width: inherit !important;
+  transform: translate(-50%, -50%) !important;
+  left: 50%;
+  top: 50%;
+}
