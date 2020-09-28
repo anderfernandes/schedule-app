@@ -1,13 +1,15 @@
 <template>
   <div>
+    
     <div class="ui basic segment">
       <div class="ui blue icon message">
         <i class="info circle icon"></i>
         <div class="content">
-          <div class="header">We now have an app!</div>
+          <div class="header">Check out our app!</div>
           <p><a href="/go-beyond/app">Click here</a> to download it!</p>
         </div>
       </div>
+      
       <div class="ui blue icon message">
         <i class="info circle icon"></i>
         <div class="content">
@@ -23,6 +25,19 @@
         </div>
       </div>
     </div>
+
+    <div class="ui basic segment">
+      <div :class="`ui ${ announcement.type } icon message`" v-for="announcement in announcements" :key="announcement.id">
+        <i class="info circle icon"></i>
+        <div class="content">
+          <div class="header">
+            {{ announcement.title }}
+          </div>
+          <p v-html="announcement.content"></p>
+        </div>
+      </div>
+    </div>
+
     <div
       class="ui basic segment"
       v-for="(day, i) in days"
@@ -69,6 +84,7 @@
       loading: true,
       end: addDays(new Date(), 14),
       cover: null,
+      announcements: [],
     }),
     components: { EventBox },
     methods: {
@@ -82,6 +98,7 @@
           )
           Object.assign(this, { days: response.data.data })
           Object.assign(this, { loading: false })
+          Object.assign(this, { announcements: response.data.announcements })
         } catch (error) {
           console.log(error.message)
         }
