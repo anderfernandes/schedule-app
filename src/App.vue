@@ -1,32 +1,45 @@
 <template>
   <div>
-    
-    <div class="ui basic segment">
-      <div class="ui blue icon message">
-        <i class="info circle icon"></i>
-        <div class="content">
-          <div class="header">Check out our app!</div>
-          <p><a href="/go-beyond/app">Click here</a> to download it!</p>
-        </div>
-      </div>
-      
-      <div class="ui blue icon message">
-        <i class="info circle icon"></i>
-        <div class="content">
-          <div class="header">
-            Are you planning on visiting us after
-            {{ format(new Date(end), 'EEEE, MMMM d') }}?
-          </div>
-          <p>
-            <a href="/public-calendar">Click here</a> to see our Public
-            Calendar, which contains all our future confirmed events as they are
-            added.
-          </p>
-        </div>
-      </div>
-    </div>
 
     <div class="ui basic segment">
+
+      <div class="ui basic segment">
+        <div class="ui blue icon message">
+          <i class="info circle icon"></i>
+          <div class="content">
+            <div class="header">Check out our app!</div>
+            <p><a href="/go-beyond/app">Click here</a> to download it!</p>
+          </div>
+        </div>
+        
+        <div class="ui blue icon message">
+          <i class="info circle icon"></i>
+          <div class="content">
+            <div class="header">
+              Are you planning on visiting us after
+              {{ format(new Date(end), 'EEEE, MMMM d') }}?
+            </div>
+            <p>
+              <a href="/public-calendar">Click here</a> to see our Public
+              Calendar, which contains all our future confirmed events as they are
+              added.
+            </p>
+          </div>
+        </div>
+
+        <div class="ui icon message">
+          <i class="info circle icon"></i>
+          <div class="content">
+            <div class="header">
+              Last updated on {{ format(new Date(), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
+            </div>
+            <p>
+              Our schedule updates automatically every 5 minutes or every time you refresh your browser.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div :class="`ui ${ announcement.type } icon message`" v-for="announcement in announcements" :key="announcement.id">
         <i class="info circle icon"></i>
         <div class="content">
@@ -75,7 +88,7 @@
 
 <script>
   import EventBox from './components/EventBox.vue'
-  import { addDays, format } from 'date-fns'
+  import { addDays, format, formatDistanceToNow } from 'date-fns'
   import axios from 'axios'
 
   export default {
@@ -85,6 +98,7 @@
       end: addDays(new Date(), 14),
       cover: null,
       announcements: [],
+      last_updated_on: new Date()
     }),
     components: { EventBox },
     methods: {
@@ -102,6 +116,7 @@
         } catch (error) {
           console.log(error.message)
         }
+        this.last_updated_on = new Date()
       },
       async fetchCover() {
         try {
@@ -116,10 +131,12 @@
         }
       },
       format,
+      formatDistanceToNow,
     },
     async mounted() {
       await this.fetchCover()
       await this.fetchEvents()
+      setInterval(async() => await this.fetchEvents(), 300000)
     },
   }
 </script>

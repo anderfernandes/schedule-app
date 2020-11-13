@@ -19,6 +19,18 @@
           <i class="clock icon"></i>
           {{ event.show.duration }} minutes
         </div>
+        <div class="ui yellow label" v-if="(event.seats.total / event.seats.available) < 0.25">
+          <i class="ticket icon"></i>
+          {{ event.seats.available }} seats available
+        </div>
+        <div class="ui red label" v-else-if="(event.seats.total / event.seats.available) < 0.1">
+          <i class="ticket icon"></i>
+          {{ event.seats.available }} seats available
+        </div>
+        <div class="ui basic blue label" v-else>
+          <i class="ticket icon"></i>
+          {{ event.seats.available }} seats available
+        </div>
         <div class="ui blue label">
           <i class="tag icon"></i>
           {{ event.type.name }}
