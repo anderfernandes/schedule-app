@@ -1,53 +1,48 @@
 <template>
-  <div>
-
-    <div class="ui basic segment">
-
-      <div class="ui basic segment">
-        <div class="ui blue icon message">
-          <i class="info circle icon"></i>
-          <div class="content">
-            <div class="header">Check out our app!</div>
-            <p><a href="/go-beyond/app">Click here</a> to download it!</p>
-          </div>
-        </div>
-        
-        <div class="ui blue icon message">
-          <i class="info circle icon"></i>
-          <div class="content">
-            <div class="header">
-              Are you planning on visiting us after
-              {{ format(new Date(end), 'EEEE, MMMM d') }}?
-            </div>
-            <p>
-              <a href="/public-calendar">Click here</a> to see our Public
-              Calendar, which contains all our future confirmed events as they are
-              added.
-            </p>
-          </div>
-        </div>
-
-        <div class="ui icon message">
-          <i class="info circle icon"></i>
-          <div class="content">
-            <div class="header">
-              Last updated on {{ format(new Date(), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
-            </div>
-            <p>
-              Our schedule updates automatically every 5 minutes or every time you refresh your browser.
-            </p>
-          </div>
-        </div>
+  <div class="ui basic segment">
+      
+    <div class="ui blue icon message">
+      <i class="info circle icon"></i>
+      <div class="content">
+        <div class="header">Check out our app!</div>
+        <p><a href="/go-beyond/app">Click here</a> to download it!</p>
       </div>
-
-      <div :class="`ui ${ announcement.type } icon message`" v-for="announcement in announcements" :key="announcement.id">
-        <i class="info circle icon"></i>
-        <div class="content">
-          <div class="header">
-            {{ announcement.title }}
-          </div>
-          <p v-html="announcement.content"></p>
+    </div>
+    
+    <div class="ui blue icon message">
+      <i class="info circle icon"></i>
+      <div class="content">
+        <div class="header">
+          Are you planning on visiting us after
+          {{ format(new Date(end), 'EEEE, MMMM d') }}?
         </div>
+        <p>
+          <a href="/public-calendar">Click here</a> to see our Public
+          Calendar, which contains all our future confirmed events as they are
+          added.
+        </p>
+      </div>
+    </div>
+
+    <div class="ui icon message">
+      <i class="info circle icon"></i>
+      <div class="content">
+        <div class="header">
+          Last updated on {{ format(new Date(), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
+        </div>
+        <p>
+          Our schedule updates automatically every 5 minutes or every time you refresh your browser.
+        </p>
+      </div>
+    </div>
+
+    <div :class="`ui ${ announcement.type } icon message`" v-for="announcement in announcements" :key="announcement.id">
+      <i class="info circle icon"></i>
+      <div class="content">
+        <div class="header">
+          {{ announcement.title }}
+        </div>
+        <p v-html="announcement.content"></p>
       </div>
     </div>
 

@@ -11,9 +11,20 @@
     <div class="content">
       <div class="header">{{ event.show.id == 1 ? event.memo : event.show.name }}</div>
       <div class="meta">
+        <div class="ui basic blue label">
+          <i class="calendar alternate outline icon"></i>
+          {{ format(new Date(event.start), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
+          ({{ formatDistanceToNow(new Date(event.start), { addSuffix: true }) }})
+        </div>
+      </div>
+      <div class="meta">
         <div class="ui blue label" v-if="event.show.id != 1">
           <i class="film icon"></i>
           {{ event.show.type }}
+        </div>
+        <div class="ui blue label">
+          <i class="tag icon"></i>
+          {{ event.type.name }}
         </div>
         <div class="ui basic blue label" v-if="event.show.id != 1">
           <i class="clock icon"></i>
@@ -31,21 +42,6 @@
           <i class="ticket icon"></i>
           {{ event.seats.available }} seats available
         </div>
-        <div class="ui blue label">
-          <i class="tag icon"></i>
-          {{ event.type.name }}
-        </div>
-        <div class="ui basic blue label">
-          <i class="calendar alternate outline icon"></i>
-          {{ format(new Date(event.start), "EEEE, MMMM d, yyyy '@' hh:mm a") }}
-          ({{ formatDistanceToNow(new Date(event.start), { addSuffix: true }) }})
-        </div>
-      </div>
-      <div class="meta">
-        <div class="ui green label" v-for="ticket in event.type.allowed_tickets" :key="ticket.id">
-          <i class="ticket icon"></i>
-          $ {{ parseFloat(ticket.price).toFixed(2) }} / {{ ticket.name }}
-        </div>
       </div>
       <div
         class="description"
@@ -57,6 +53,12 @@
           source="youtube"
           :id="event.show.trailer_url.split('=')[1]"
         />
+      </div>
+      <div class="meta">
+        <div class="ui green label" v-for="ticket in event.type.allowed_tickets" :key="ticket.id">
+          <i class="ticket icon"></i>
+          $ {{ parseFloat(ticket.price).toFixed(2) }} / {{ ticket.name }}
+        </div>
       </div>
     </div>
   </div>
