@@ -50,8 +50,8 @@
       <div class="description" v-if="event.show.trailer_url && show_trailer">
         <sui-embed
           :placeholder="event.show.cover"
-          source="youtube"
-          :id="event.show.trailer_url.split('=')[1]"
+          :source="event.show.trailer_provider"
+          :id="event.show.trailer_id"
         />
       </div>
       <div class="meta">

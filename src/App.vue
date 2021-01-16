@@ -115,11 +115,9 @@
       },
       async fetchCover() {
         try {
-          const response = await axios.get(
-            'https://astral.ctcd.org/api/settings'
-          )
+          const response = await axios.get(`${SERVER}/api/settings`)
           Object.assign(this, {
-            cover: `https://astral.ctcd.org/storage/${response.data.cover}`,
+            cover: `${SERVER}/storage/${response.data.cover}`,
           })
         } catch (error) {
           console.log(error.message)
